@@ -1,0 +1,236 @@
+---
+name: Delhi NCR Women Transit Safety
+colors:
+  surface: '#17111c'
+  surface-dim: '#17111c'
+  surface-bright: '#3d3742'
+  surface-container-lowest: '#110c16'
+  surface-container-low: '#1f1924'
+  surface-container: '#231d28'
+  surface-container-high: '#2e2833'
+  surface-container-highest: '#39323e'
+  on-surface: '#eadfee'
+  on-surface-variant: '#e3bdc5'
+  inverse-surface: '#eadfee'
+  inverse-on-surface: '#342e39'
+  outline: '#aa888f'
+  outline-variant: '#5b3f46'
+  surface-tint: '#ffb1c5'
+  primary: '#ffb1c5'
+  on-primary: '#65002f'
+  primary-container: '#ff4a8e'
+  on-primary-container: '#590028'
+  inverse-primary: '#ba005c'
+  secondary: '#c7fff0'
+  on-secondary: '#00382f'
+  secondary-container: '#00f2d1'
+  on-secondary-container: '#006a5a'
+  tertiary: '#ffb86b'
+  on-tertiary: '#492900'
+  tertiary-container: '#cf7e00'
+  on-tertiary-container: '#3f2300'
+  error: '#ffb4ab'
+  on-error: '#690005'
+  error-container: '#93000a'
+  on-error-container: '#ffdad6'
+  primary-fixed: '#ffd9e1'
+  primary-fixed-dim: '#ffb1c5'
+  on-primary-fixed: '#3f001b'
+  on-primary-fixed-variant: '#8f0045'
+  secondary-fixed: '#26fedc'
+  secondary-fixed-dim: '#00dfc1'
+  on-secondary-fixed: '#00201a'
+  on-secondary-fixed-variant: '#005144'
+  tertiary-fixed: '#ffdcbc'
+  tertiary-fixed-dim: '#ffb86b'
+  on-tertiary-fixed: '#2c1700'
+  on-tertiary-fixed-variant: '#683d00'
+  background: '#17111c'
+  on-background: '#eadfee'
+  surface-variant: '#39323e'
+typography:
+  headline-xl:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 3rem
+    fontWeight: '700'
+    lineHeight: 3.5rem
+    letterSpacing: -0.03em
+  headline-xl-mobile:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 2rem
+    fontWeight: '700'
+    lineHeight: 2.5rem
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 2.25rem
+    fontWeight: '700'
+    lineHeight: 2.75rem
+    letterSpacing: -0.02em
+  headline-lg-mobile:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 1.625rem
+    fontWeight: '700'
+    lineHeight: 2.125rem
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 1.5rem
+    fontWeight: '600'
+    lineHeight: 2rem
+    letterSpacing: -0.01em
+  headline-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 1.25rem
+    fontWeight: '600'
+    lineHeight: 1.75rem
+    letterSpacing: 0em
+  body-lg:
+    fontFamily: Inter
+    fontSize: 1.125rem
+    fontWeight: '400'
+    lineHeight: 1.75rem
+    letterSpacing: 0em
+  body-md:
+    fontFamily: Inter
+    fontSize: 1rem
+    fontWeight: '400'
+    lineHeight: 1.5rem
+    letterSpacing: 0em
+  body-sm:
+    fontFamily: Inter
+    fontSize: 0.875rem
+    fontWeight: '400'
+    lineHeight: 1.25rem
+    letterSpacing: 0.01em
+  label-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.875rem
+    fontWeight: '600'
+    lineHeight: 1.25rem
+    letterSpacing: 0.02em
+  label-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.75rem
+    fontWeight: '600'
+    lineHeight: 1rem
+    letterSpacing: 0.04em
+  label-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.6875rem
+    fontWeight: '700'
+    lineHeight: 0.875rem
+    letterSpacing: 0.06em
+rounded:
+  sm: 0.25rem
+  DEFAULT: 0.5rem
+  md: 0.75rem
+  lg: 1rem
+  xl: 1.5rem
+  full: 9999px
+spacing:
+  gutter: 1rem
+  gutter-md: 1.5rem
+  gutter-lg: 2rem
+  margin: 1rem
+  margin-md: 1.5rem
+  margin-lg: 3rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2rem
+---
+
+## Brand & Style
+
+This design system is engineered for transit safety, personal autonomy, and rapid spatial orientation across urban transit networks in Delhi NCR. It repudiates sterile, clinical civic design in favor of an empowering, vigilant, and nocturnal visual environment. The style fuses obsidian glassmorphism with high-visibility tactical accents, balancing deep ambient calm with unmissable navigational clarity.
+
+The target audience comprises women navigating metro stations, last-mile e-rickshaw routes, shared cabs, and pedestrian corridors across Delhi, Gurgaon, and Noida at all hours. The interface must inspire decisive confidence under high-stress conditions while feeling protective and premium during daily routines.
+
+Key stylistic markers:
+- Deep nocturnal foundation layers (obsidian-plum) that reduce glare and eye strain in low-light environments.
+- High-intensity magenta-pink action focal points that immediately guide the eye to emergency mechanics, live sharing, and verified route decisions.
+- Hyper-tactile, luminous signal anchors: cyber-mint for validated safety zones and amber-crimson for cautionary alerts.
+- Tactile glassmorphism with delicate neon-rimmed containment to keep spatial hierarchies legible on OLED screens.
+
+## Colors
+
+The palette operates on a strict functional hierarchy built on low-luminance plum-blacks and saturated high-visibility luminescent indicators.
+
+### Core Swatches
+- **Primary (`#FF2A85` - Radiant Hot Pink):** The primary brand authority. Used for urgent interactions, live trip broadcasting, panic SOS buttons, primary progress indicators, and active journey waypoints.
+- **Secondary (`#00F5D4` - Cyber Mint Teal):** The confirmation and safe-harbor token. Reserved strictly for verified safe corridors, Pink Saheli police assistance booths, well-lit zones, and validated metro marshals.
+- **Tertiary (`#FF9F1C` - Cautionary Amber):** Used for caution indicators, unlit stretches, reported aggregations, liquor shop proximities, and unverified route options. Pair with `#E63946` (Crimson) for immediate danger alerts.
+- **Neutral Canvas (`#0E0913` - Obsidian Plum Base):** Deep, warm-tinted black minimizing night glare. Subordinate layer tiers expand to `#181120` (Surface Mid) and `#251B2E` (Surface High).
+
+### Text & Accents
+- **High-Contrast Text (`#FFFFFF`):** Reserved for directional labels, emergency headers, and primary reading paths.
+- **Muted Text (`#D8C7E8` - Soft Lilac):** Used for non-critical route metadata, timestamps, and secondary card descriptions.
+- **Subtle Perimeter Border (`rgba(255, 42, 133, 0.22)`):** Defines card edges and floating sheets against dark map canvases.
+
+## Typography
+
+The typographic hierarchy is structured for rapid cognitive intake under duress, movement, or poor ambient lighting. 
+
+**Plus Jakarta Sans** is leveraged across all headlines, quick-scan labels, and key performance metric points. Its modern, wide geometric letterforms provide immediate legibility and an approachable posture that eliminates clinical intimidation.
+
+**Inter** handles all body content, step-by-step route descriptions, legal verification details, and dense reporting notes. Its taller x-height and neutral stroke modulation avoid reader fatigue and ensure that street names, bus numbers, and emergency contact numbers remain unambiguous at varying viewing distances.
+
+Numbers must always display with tabular figures (`tnum`) in route estimates, countdown timers, and bus arrival updates to prevent layout shifting.
+
+## Layout & Spacing
+
+The layout is built around a mobile-first, one-handed operational model. In transit environments, thumbs command the lower 40% of the screen.
+
+- **Grid Architecture:** 
+  - Mobile (< 600px): 4-column fluid layout with `1rem` margins and `1rem` gutters. Map layers serve as absolute backdrops, while bottom sheets and floating toolbars conform to horizontal margins.
+  - Tablet (600px - 1024px): 8-column layout with `1.5rem` margins and `1.5rem` gutters. Cards split into a dynamic dual-pane configuration (route telemetry on the left, interactive safe map on the right).
+  - Desktop / Control Panel (> 1024px): 12-column layout with `3rem` margins, maximum content width capped at `1280px`.
+- **Rhythm Rules:** All layout padding and gaps adhere strictly to the 4px/8px incremental base rhythm. Vertical margins stack rhythmically using `space-md` for standard metadata and `space-xl` when segregating interactive control panels from read-only data blocks.
+
+## Elevation & Depth
+
+Visual hierarchy uses layered dark obsidian containers coupled with translucent frosted glass and neon-tinted luminescence rather than standard drop shadows.
+
+- **Level 0 (Canvas Base):** Solid deep background `#0E0913`. Serves as the substrate for transit maps and low-priority settings views.
+- **Level 1 (Surface Mid / Panels):** Solid `#181120` or translucent `rgba(24, 17, 32, 0.85)` with `16px` backdrop-filter blur. Outlined by a soft 1px border of `rgba(255, 255, 255, 0.08)`.
+- **Level 2 (Active Cards & Floating Drawers):** `rgba(37, 27, 46, 0.88)` with `24px` backdrop blur. Outlined with a 1px border of `rgba(255, 42, 133, 0.28)`. Emits an ambient low-opacity outer glow: `0 8px 32px -4px rgba(255, 42, 133, 0.12)`.
+- **Level 3 (Emergency Floating Trigger / Modals):** High-priority overlays. Gradient border transitioning from `#FF2A85` to `rgba(255, 42, 133, 0.2)` with a concentrated luminous aura: `0 0 24px rgba(255, 42, 133, 0.35)`.
+- **Safety Beacon Elevation (Mint Overlay):** Used for verified safe zones and Pink Saheli booths: `0 0 20px rgba(0, 245, 212, 0.3)`.
+
+## Shapes
+
+The design system implements a roundedness level of 2 (`0.5rem` base, scaling to `1rem` on cards and `1.5rem` on large bottom sheets). 
+
+- **Interactive Core:** Buttons, input wrappers, and chip pills adopt predictable curvature that feels organic and non-aggressive while preserving structural discipline.
+- **Cards & Modals:** Standard cards feature `1rem` (16px) corners. Main navigation sheets, contextual emergency panels, and route previews use `1.5rem` (24px) top corner radii to establish an inviting, protective frame.
+- **Emergency Action Targets:** The primary SOS trigger is a strict circular container (infinite corner radius) to eliminate all directional bias when pressed in high-anxiety scenarios.
+
+## Components
+
+### Buttons
+- **Primary Action (Emergency SOS):** Bold circular or pill button with `#FF2A85` background, pure `#FFFFFF` typography (`label-lg`), and an oscillating perimeter pulse.
+- **Secondary Safe Action (Share Live Journey / Call Booth):** Surface background `#181120`, 1.5px solid `#00F5D4` outline, text color `#00F5D4`. On tap, fills with `rgba(0, 245, 212, 0.15)`.
+- **Ghost/Tertiary:** Transparent fill, `#D8C7E8` text, transitioning to `rgba(255, 255, 255, 0.06)` on interaction.
+
+### Chips & Badges
+- **Verified Safe Badge:** Compact pill containing a cyber-mint `#00F5D4` fill at 12% opacity, a 1px `#00F5D4` border, and high-visibility `#00F5D4` text with a shield icon.
+- **Hazard Warning Tag:** Amber `#FF9F1C` text over a 15% opacity amber fill for dark spots or unverified transit zones.
+
+### Cards
+- **Route Cards:** Rendered in `Level 2` elevation. Displays destination, lighting score index, crowd density meter, and verified transit checkpoints. Border shifts to `#00F5D4` if the entire route is vetted by safety marshals.
+- **Safe Zone Cards (Pink Saheli Booths):** Elevated plum containers with `#00F5D4` iconography, distance metrics, and one-tap emergency call triggers.
+
+### Inputs & Search Bars
+- Background set to `#181120` with a 1px border in `rgba(216, 199, 232, 0.2)`. 
+- Placeholder text in `#D8C7E8` at 60% opacity. 
+- Focused state transitions the border to `#FF2A85` with a subtle `0 0 12px rgba(255, 42, 133, 0.25)` inner-outer glow.
+
+### Checkboxes & Radios
+- Square with 4px radius (checkbox) or circle (radio).
+- Default: `rgba(216, 199, 232, 0.3)` outline against `#181120`.
+- Checked: `#FF2A85` fill with a crisp white tick or inner pip.
+
+### Safe Corridor Tracker (Custom Component)
+- A bottom drawer showing live breadcrumb progress with vertical connection lines. Segments alternate in color: cyber-mint for illuminated/monitored roads and amber-crimson for caution zones, keeping transit context explicit at a glance.

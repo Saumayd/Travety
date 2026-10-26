@@ -1,0 +1,146 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isValidLobby(data) {
+      return data.keys().hasAll([
+        'code', 'title', 'hostName', 'hostId', 'centralHub',
+        'departureTime', 'activePings', 'lastPingBy', 'sosActive',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'code', 'title', 'hostName', 'hostId', 'centralHub',
+        'departureTime', 'activePings', 'lastPingBy', 'sosActive',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.code is string && data.code.size() >= 4 && data.code.size() <= 16 && data.code.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.title is string && data.title.size() >= 1 && data.title.size() <= 80 &&
+      data.hostName is string && data.hostName.size() >= 1 && data.hostName.size() <= 50 &&
+      data.hostId is string && data.hostId.size() >= 1 && data.hostId.size() <= 128 &&
+      data.centralHub is string && data.centralHub.size() >= 1 && data.centralHub.size() <= 100 &&
+      data.departureTime is string && data.departureTime.size() >= 1 && data.departureTime.size() <= 20 &&
+      data.activePings is int && data.activePings >= 0 && data.activePings <= 10000 &&
+      data.lastPingBy is string && data.lastPingBy.size() <= 60 &&
+      data.sosActive is bool &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidMember(data) {
+      return data.keys().hasAll([
+        'lobbyCode', 'userId', 'name', 'initials', 'gender',
+        'stationId', 'stationName', 'curfew', 'curfewType',
+        'companionStatus', 'budget', 'pairingNote', 'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'lobbyCode', 'userId', 'name', 'initials', 'gender',
+        'stationId', 'stationName', 'curfew', 'curfewType',
+        'companionStatus', 'budget', 'pairingNote', 'createdAt', 'updatedAt'
+      ]) &&
+      data.lobbyCode is string && data.lobbyCode.size() >= 4 && data.lobbyCode.size() <= 16 && data.lobbyCode.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.userId is string && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+      data.name is string && data.name.size() >= 1 && data.name.size() <= 50 &&
+      data.initials is string && data.initials.size() >= 1 && data.initials.size() <= 4 &&
+      data.gender is string && data.gender.size() <= 20 && (data.gender == 'female' || data.gender == 'male' || data.gender == 'non-binary') &&
+      data.stationId is string && data.stationId.size() >= 1 && data.stationId.size() <= 40 &&
+      data.stationName is string && data.stationName.size() >= 1 && data.stationName.size() <= 80 &&
+      data.curfew is string && data.curfew.size() >= 1 && data.curfew.size() <= 20 &&
+      data.curfewType is string && data.curfewType.size() >= 1 && data.curfewType.size() <= 20 &&
+      data.companionStatus is string && data.companionStatus.size() <= 20 && (data.companionStatus == 'alone' || data.companionStatus == 'accompanied') &&
+      data.budget is string && data.budget.size() >= 1 && data.budget.size() <= 30 &&
+      data.pairingNote is string && data.pairingNote.size() >= 1 && data.pairingNote.size() <= 80 &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    match /lobbies/{lobbyCode} {
+      allow get: if isSignedIn() && isValidId(lobbyCode);
+      allow list: if isSignedIn() && existing().hostId == request.auth.uid;
+
+      allow create: if isSignedIn() &&
+        isValidId(lobbyCode) &&
+        isValidLobby(incoming()) &&
+        incoming().code == lobbyCode &&
+        incoming().hostId == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() &&
+        isValidId(lobbyCode) &&
+        isValidLobby(incoming()) &&
+        incoming().code == existing().code &&
+        incoming().hostId == existing().hostId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time && (
+          // Action: Telemetry / Hub / Ping / SOS Sync
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'centralHub', 'departureTime', 'activePings', 'lastPingBy', 'sosActive', 'updatedAt'
+          ]) ||
+          // Action: Host Title Update
+          (existing().hostId == request.auth.uid &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'title', 'centralHub', 'departureTime', 'activePings', 'lastPingBy', 'sosActive', 'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isSignedIn() && isValidId(lobbyCode) && existing().hostId == request.auth.uid;
+
+      match /members/{memberId} {
+        allow get: if isSignedIn() && isValidId(lobbyCode) && isValidId(memberId) &&
+          exists(/databases/$(database)/documents/lobbies/$(lobbyCode));
+        allow list: if isSignedIn() && existing().lobbyCode == lobbyCode;
+
+        allow create: if isSignedIn() &&
+          isValidId(lobbyCode) &&
+          isValidId(memberId) &&
+          isValidMember(incoming()) &&
+          incoming().lobbyCode == lobbyCode &&
+          incoming().userId == request.auth.uid &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          exists(/databases/$(database)/documents/lobbies/$(lobbyCode));
+
+        allow update: if isSignedIn() &&
+          isValidId(lobbyCode) &&
+          isValidId(memberId) &&
+          isValidMember(incoming()) &&
+          existing().userId == request.auth.uid &&
+          incoming().userId == existing().userId &&
+          incoming().lobbyCode == existing().lobbyCode &&
+          incoming().createdAt == existing().createdAt &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'name', 'initials', 'gender', 'stationId', 'stationName',
+            'curfew', 'curfewType', 'companionStatus', 'budget', 'pairingNote', 'updatedAt'
+          ]) &&
+          exists(/databases/$(database)/documents/lobbies/$(lobbyCode));
+
+        allow delete: if isSignedIn() &&
+          isValidId(lobbyCode) &&
+          isValidId(memberId) &&
+          existing().userId == request.auth.uid;
+      }
+    }
+  }
+}

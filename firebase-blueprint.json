@@ -1,0 +1,200 @@
+{
+  "entities": {
+    "Lobby": {
+      "title": "Lobby",
+      "description": "A group hangout safety lobby in Delhi NCR",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6-to-10 character lobby invite code",
+          "minLength": 4,
+          "maxLength": 16,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Hangout event title",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "hostName": {
+          "type": "string",
+          "description": "Organizer display name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "hostId": {
+          "type": "string",
+          "description": "UID of the creator",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "centralHub": {
+          "type": "string",
+          "description": "Calculated central DMRC metro hub",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "departureTime": {
+          "type": "string",
+          "description": "Calculated hub departure time",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "activePings": {
+          "type": "number",
+          "description": "Count of active GPS pings"
+        },
+        "lastPingBy": {
+          "type": "string",
+          "description": "Name of member who last pinged",
+          "maxLength": 60
+        },
+        "sosActive": {
+          "type": "boolean",
+          "description": "Whether an emergency SOS alert is currently active"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": [
+        "code",
+        "title",
+        "hostName",
+        "hostId",
+        "centralHub",
+        "departureTime",
+        "activePings",
+        "lastPingBy",
+        "sosActive",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Member": {
+      "title": "Member",
+      "description": "A squad member synced to a lobby with commute and curfew preferences",
+      "type": "object",
+      "properties": {
+        "lobbyCode": {
+          "type": "string",
+          "description": "Parent lobby code",
+          "minLength": 4,
+          "maxLength": 16,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user who added/updated this member",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Member display name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "initials": {
+          "type": "string",
+          "description": "2-letter avatar initials",
+          "minLength": 1,
+          "maxLength": 4
+        },
+        "gender": {
+          "type": "string",
+          "description": "Gender routing profile",
+          "enum": ["female", "male", "non-binary"],
+          "maxLength": 20
+        },
+        "stationId": {
+          "type": "string",
+          "description": "DMRC station identifier",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "stationName": {
+          "type": "string",
+          "description": "DMRC station display label",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "curfew": {
+          "type": "string",
+          "description": "Home arrival curfew time",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "curfewType": {
+          "type": "string",
+          "description": "Strictness label for curfew",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "companionStatus": {
+          "type": "string",
+          "description": "Whether traveling alone or accompanied",
+          "enum": ["alone", "accompanied"],
+          "maxLength": 20
+        },
+        "budget": {
+          "type": "string",
+          "description": "Per-person outing budget",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "pairingNote": {
+          "type": "string",
+          "description": "Calculated companion pairing note",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": [
+        "lobbyCode",
+        "userId",
+        "name",
+        "initials",
+        "gender",
+        "stationId",
+        "stationName",
+        "curfew",
+        "curfewType",
+        "companionStatus",
+        "budget",
+        "pairingNote",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/lobbies/{lobbyCode}": {
+      "schema": { "$ref": "#/entities/Lobby" },
+      "description": "Stores active group hangout safety lobbies indexed by invite code"
+    },
+    "/lobbies/{lobbyCode}/members/{memberId}": {
+      "schema": { "$ref": "#/entities/Member" },
+      "description": "Stores squad members and their safety preferences within a lobby"
+    }
+  }
+}
