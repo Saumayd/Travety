@@ -1,6 +1,0 @@
-{
-  "name": "Travety",
-  "description": "Delhi NCR Safety-First Group Hangouts & Commute Shield with 2.0x female priority routing, curfew synchronization, and escort pairing.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
