@@ -1,0 +1,312 @@
+{
+  "entities": {
+    "Lobby": {
+      "title": "Lobby",
+      "description": "A group hangout travel lobby supporting Safe Case and Best Fun Case modes",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6-to-10 character lobby invite code",
+          "minLength": 4,
+          "maxLength": 16,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Hangout event title",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "hostName": {
+          "type": "string",
+          "description": "Organizer display name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "hostId": {
+          "type": "string",
+          "description": "UID of the creator",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "mode": {
+          "type": "string",
+          "description": "Active calculation mode: safe or fun",
+          "enum": ["safe", "fun"],
+          "maxLength": 10
+        },
+        "centralHub": {
+          "type": "string",
+          "description": "Calculated central hangout hub",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "departureTime": {
+          "type": "string",
+          "description": "Calculated earliest departure time",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "activePings": {
+          "type": "number",
+          "description": "Count of active pings or alerts"
+        },
+        "lastPingBy": {
+          "type": "string",
+          "description": "Name of member who last triggered an update",
+          "maxLength": 60
+        },
+        "sosActive": {
+          "type": "boolean",
+          "description": "Whether an emergency SOS alert is currently active"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": [
+        "code",
+        "title",
+        "hostName",
+        "hostId",
+        "mode",
+        "centralHub",
+        "departureTime",
+        "activePings",
+        "lastPingBy",
+        "sosActive",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Member": {
+      "title": "Member",
+      "description": "A participant in a lobby with manual location, curfew, accompanying details, and budget",
+      "type": "object",
+      "properties": {
+        "lobbyCode": {
+          "type": "string",
+          "description": "Parent lobby code",
+          "minLength": 4,
+          "maxLength": 16,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Participant display name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "initials": {
+          "type": "string",
+          "description": "2-letter avatar initials",
+          "minLength": 1,
+          "maxLength": 4
+        },
+        "gender": {
+          "type": "string",
+          "description": "Participant gender (female or male)",
+          "enum": ["female", "male"],
+          "maxLength": 16
+        },
+        "location": {
+          "type": "string",
+          "description": "Manual starting location input",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "curfew": {
+          "type": "string",
+          "description": "Manual home arrival curfew time",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "accompanyingDetails": {
+          "type": "string",
+          "description": "Details about who is accompanying or solo travel",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "budget": {
+          "type": "number",
+          "description": "Per-person budget in INR"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Optional phone number for automated curfew SMS",
+          "maxLength": 20
+        },
+        "leaveByTime": {
+          "type": "string",
+          "description": "Calculated time to leave the venue to reach home before curfew",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "transitMins": {
+          "type": "number",
+          "description": "Estimated transit duration in minutes"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": [
+        "lobbyCode",
+        "userId",
+        "name",
+        "initials",
+        "gender",
+        "location",
+        "curfew",
+        "accompanyingDetails",
+        "budget",
+        "phone",
+        "leaveByTime",
+        "transitMins",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PollOption": {
+      "title": "PollOption",
+      "description": "An interactive poll option inside a lobby",
+      "type": "object",
+      "properties": {
+        "lobbyCode": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 16,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "subtitle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "votes": {
+          "type": "number"
+        },
+        "createdBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "lobbyCode",
+        "title",
+        "subtitle",
+        "votes",
+        "createdBy",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AreaReview": {
+      "title": "AreaReview",
+      "description": "User-submitted area safety rating and unsafe/lighting flag report",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "authorName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "areaName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "safetyRating": {
+          "type": "number"
+        },
+        "lightingStatus": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "issueFlag": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "comment": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "authorName",
+        "areaName",
+        "safetyRating",
+        "lightingStatus",
+        "issueFlag",
+        "comment",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/lobbies/{lobbyCode}": {
+      "schema": { "$ref": "#/entities/Lobby" },
+      "description": "Stores active group hangout lobbies"
+    },
+    "/lobbies/{lobbyCode}/members/{memberId}": {
+      "schema": { "$ref": "#/entities/Member" },
+      "description": "Stores participant questionnaire responses in a lobby"
+    },
+    "/lobbies/{lobbyCode}/polls/{pollId}": {
+      "schema": { "$ref": "#/entities/PollOption" },
+      "description": "Stores interactive destination poll options in a lobby"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/AreaReview" },
+      "description": "Stores area safety ratings and flagged lighting/unsafe spot reports"
+    }
+  }
+}
