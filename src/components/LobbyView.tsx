@@ -9,6 +9,7 @@ import {
   SquadMember,
 } from '../data/ncrMetroData';
 import { GroundingSource } from './GeminiChatDrawer';
+import { getApiUrl } from '../lib/api.ts';
 import { LobbyMapWidget } from './LobbyMapWidget';
 
 interface LobbyViewProps {
@@ -133,7 +134,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({
     setSearchPulseSources([]);
     try {
       const query = `Latest Delhi Metro (${activeMapHub.metroLine}) status, evening weather, and popular student hangout cafes near ${activeMapHub.name} (${activeMapHub.area})`;
-      const res = await fetch('/api/gemini/search-grounding', {
+      const res = await fetch(getApiUrl('/api/gemini/search-grounding'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),

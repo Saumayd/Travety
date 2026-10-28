@@ -15,6 +15,7 @@ import {
   SquadMember,
 } from '../data/ncrMetroData';
 import { DmrcMetroMap } from './DmrcMetroMap';
+import firebaseConfig from '../../firebase-applet-config.json';
 
 export type MapVisualMode = 'metro' | 'google';
 
@@ -55,7 +56,7 @@ export const LobbyMapWidget: React.FC<LobbyMapWidgetProps> = ({
   const [visualMode, setVisualMode] = useState<MapVisualMode>('metro');
   const [selectedMarker, setSelectedMarker] = useState<PlottedPoint | null>(null);
 
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || firebaseConfig.apiKey || '';
   const userHomeCoords = resolveLocationCoords(userLocation);
   const userSchedule = calculateParticipantSchedule(userCurfew, userLocation);
   const userDistanceToHubKm = calculateDistanceKm(

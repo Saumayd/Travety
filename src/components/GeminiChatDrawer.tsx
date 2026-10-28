@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AppMode, LobbyData, SquadMember } from '../data/ncrMetroData';
+import { getApiUrl } from '../lib/api.ts';
 
 export interface GroundingSource {
   title: string;
@@ -119,7 +120,7 @@ export const GeminiChatDrawer: React.FC<GeminiChatDrawerProps> = ({
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/gemini/chat', {
+      const response = await fetch(getApiUrl('/api/gemini/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -46,6 +46,7 @@ import { PastOutingsView } from './components/PastOutingsView';
 import { ReviewsView } from './components/ReviewsView';
 import { SosModal } from './components/SosModal';
 import { ChatMessageItem, GeminiChatDrawer } from './components/GeminiChatDrawer';
+import { getApiUrl } from './lib/api.ts';
 
 const DEFAULT_LOBBY: LobbyData = {
   code: 'TRV-8492',
@@ -157,16 +158,17 @@ export default function App() {
     return () => window.removeEventListener('gmp-quota-exceeded', onQuota);
   }, []);
 
-  // Helper to call authenticated Cloud SQL endpoints with in-memory Firebase ID token
+  // Helper to call authenticated PostgreSQL / Supabase endpoints
   const callSqlApi = async (path: string, method: 'GET' | 'POST', body?: unknown) => {
-    if (!auth.currentUser) return null;
     try {
-      const token = await auth.currentUser.getIdToken();
-      const res = await fetch(path, {
+      const token = auth.currentUser ? await auth.currentUser.getIdToken() : 'demo-saumay';
+      const devUid = auth.currentUser?.uid || user?.uid || 'demo-saumay';
+      const res = await fetch(getApiUrl(path), {
         method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
+          'x-dev-user-id': devUid,
         },
         ...(body ? { body: JSON.stringify(body) } : {}),
       });
@@ -203,7 +205,7 @@ export default function App() {
       if (currentUser) {
         try {
           const token = await currentUser.getIdToken();
-          await fetch('/api/sql/sync-user', {
+          await fetch(getApiUrl('/api/sql/sync-user'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -223,7 +225,7 @@ export default function App() {
 
   // Sync Lobby, Members, Polls, and Reviews when authenticated
   useEffect(() => {
-    if (!authReady || !user || !lobbyCode) return;
+    if (!authReady || !lobbyCode) return;
 
     const loadFromSql = async () => {
       const data = await callSqlApi(`/api/sql/lobby/${encodeURIComponent(lobbyCode)}`, 'GET');
@@ -236,7 +238,7 @@ export default function App() {
           code: data.lobby.code || lobbyCode,
           title: data.lobby.title || 'NSUT × IGDTUW Squad Meet',
           hostName: data.lobby.hostName || 'Saumay',
-          hostId: data.lobby.hostId || user.uid,
+          hostId: data.lobby.hostId || user?.uid || 'demo-saumay',
           mode: loadedMode,
           centralHub:
             data.lobby.centralHub || 'NSUT (Netaji Subhas University of Technology)',
@@ -329,13 +331,13 @@ export default function App() {
           await setDoc(lobbyRef, {
             code: lobbyCode,
             title: lobby.title,
-            hostName: (user.displayName || userName || 'Saumay').slice(0, 50),
-            hostId: user.uid,
+            hostName: (user?.displayName || userName || 'Saumay').slice(0, 50),
+            hostId: user?.uid || 'demo-saumay',
             mode: mode,
             centralHub: lobby.centralHub,
             departureTime: lobby.departureTime,
             activePings: 5,
-            lastPingBy: (user.displayName || userName || 'Saumay').slice(0, 60),
+            lastPingBy: (user?.displayName || userName || 'Saumay').slice(0, 60),
             sosActive: false,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
@@ -359,7 +361,7 @@ export default function App() {
             code: data.code || lobbyCode,
             title: data.title || 'NSUT × IGDTUW Squad Meet',
             hostName: data.hostName || 'Saumay',
-            hostId: data.hostId || user.uid,
+            hostId: data.hostId || user?.uid || 'demo-saumay',
             mode: loadedMode,
             centralHub: data.centralHub || 'NSUT (Netaji Subhas University of Technology)',
             departureTime: data.departureTime || '7:45 PM',

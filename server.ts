@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
@@ -19,7 +20,7 @@ const __dirname = path.dirname(__filename);
 
 function getAiClient(): GoogleGenAI {
   return new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey: process.env.GEMINI_API_KEY || '',
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',
@@ -61,12 +62,35 @@ function extractGroundingSources(response: GenerateContentResponse): GroundingSo
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
+
+  // Cross-Origin Resource Sharing (CORS) enabled for Vercel <-> Render deployment
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'x-dev-user-id'],
+    })
+  );
 
   app.use(express.json({ limit: '2mb' }));
 
   // ============================================================================
-  // Cloud SQL (PostgreSQL + Drizzle ORM) Authenticated Routes
+  // Health Check Endpoint (For Render, Vercel & Deployment Validation)
+  // ============================================================================
+  app.get('/api/health', (_req, res) => {
+    res.json({
+      status: 'ok',
+      service: 'travety-backend',
+      timestamp: new Date().toISOString(),
+      databaseConfigured: Boolean(process.env.DATABASE_URL || process.env.SQL_HOST),
+      geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
+    });
+  });
+
+  // ============================================================================
+  // PostgreSQL / Supabase Authenticated Routes
   // ============================================================================
 
   app.post('/api/sql/sync-user', requireAuth, async (req: AuthRequest, res) => {
@@ -82,7 +106,7 @@ async function startServer() {
       res.json({ user: userRecord });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to sync user';
-      console.error('Failed to sync user in Cloud SQL:', error);
+      console.error('Failed to sync user in PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -94,7 +118,7 @@ async function startServer() {
       res.json(snapshot);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to fetch lobby state';
-      console.error('Failed to load lobby from Cloud SQL:', error);
+      console.error('Failed to load lobby from PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -124,7 +148,7 @@ async function startServer() {
       res.json({ lobby: updated });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to save lobby';
-      console.error('Failed to upsert lobby in Cloud SQL:', error);
+      console.error('Failed to upsert lobby in PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -155,7 +179,7 @@ async function startServer() {
       res.json({ member: updated });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to save member';
-      console.error('Failed to upsert member in Cloud SQL:', error);
+      console.error('Failed to upsert member in PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -179,7 +203,7 @@ async function startServer() {
       res.json({ poll: updated });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to save poll';
-      console.error('Failed to upsert poll in Cloud SQL:', error);
+      console.error('Failed to upsert poll in PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -207,7 +231,7 @@ async function startServer() {
       res.json({ review: updated });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to save review';
-      console.error('Failed to insert review in Cloud SQL:', error);
+      console.error('Failed to insert review in PostgreSQL:', error);
       res.status(500).json({ error: message });
     }
   });
@@ -218,6 +242,14 @@ async function startServer() {
 
   app.post('/api/gemini/chat', async (req, res) => {
     try {
+      if (!process.env.GEMINI_API_KEY) {
+        res.status(503).json({
+          error:
+            'Gemini API Key is not configured yet. Set GEMINI_API_KEY in your environment variables to enable AI chat.',
+        });
+        return;
+      }
+
       const {
         messages = [],
         modelTier = 'general',
@@ -287,7 +319,7 @@ async function startServer() {
       console.error('Gemini Chat API Error:', message);
       res.status(500).json({
         error:
-          'Unable to complete the Gemini request right now. Please verify your API key in Settings > Secrets.',
+          'Unable to complete the Gemini request right now. Please verify your GEMINI_API_KEY in environment variables.',
         details: message,
       });
     }
@@ -295,6 +327,14 @@ async function startServer() {
 
   app.post('/api/gemini/search-grounding', async (req, res) => {
     try {
+      if (!process.env.GEMINI_API_KEY) {
+        res.status(503).json({
+          error:
+            'Gemini API Key is not configured yet. Set GEMINI_API_KEY in your environment variables to enable real-time search grounding.',
+        });
+        return;
+      }
+
       const {
         query = 'Latest Delhi Metro DMRC Blue and Yellow Line status and weather around Dwarka and Kashmere Gate',
       } = req.body as { query?: string };
@@ -337,7 +377,7 @@ async function startServer() {
   } else {
     const distPath = path.join(__dirname, 'dist');
     app.use(express.static(distPath));
-    app.get('*all', (_req, res) => {
+    app.get('*', (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
