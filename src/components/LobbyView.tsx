@@ -1,3 +1,4 @@
+import { getApiUrl } from '../lib/api.ts';
 import React, { useState } from 'react';
 import {
   AppMode,
@@ -9,7 +10,6 @@ import {
   SquadMember,
 } from '../data/ncrMetroData';
 import { GroundingSource } from './GeminiChatDrawer';
-import { getApiUrl } from '../lib/api.ts';
 import { LobbyMapWidget } from './LobbyMapWidget';
 
 interface LobbyViewProps {

@@ -1,6 +1,6 @@
+import { getApiUrl } from '../lib/api.ts';
 import React, { useEffect, useRef, useState } from 'react';
 import { AppMode, LobbyData, SquadMember } from '../data/ncrMetroData';
-import { getApiUrl } from '../lib/api.ts';
 
 export interface GroundingSource {
   title: string;
@@ -133,6 +133,23 @@ export const GeminiChatDrawer: React.FC<GeminiChatDrawerProps> = ({
           lobbyContext: buildLobbyContextString(),
         }),
       });
+
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        // Static hosting fallback (e.g. GitHub Pages)
+        const fallbackMsg: ChatMessageItem = {
+          id: `msg-${Date.now()}-m`,
+          role: 'model',
+          text: `**Travety Offline Commute Advisory (${lobby.centralHub})**\n\n• **Recommended DMRC Route**: Board the **Blue Line** at **Dwarka Mor (NSUT)** or **Yellow Line** at **Kashmere Gate (IGDTUW)** and interchange via **Rajiv Chowk**.\n• **Curfew Synchronization**: Based on the earliest squad curfew (**Rimisha · 8:15 PM at Civil Lines**), initiate group wrap-up by **7:35 PM**.\n• **Safety Check**: Board near the Women's Coach (1st coach in moving direction) and use verified **Pink Saheli** helpdesks at Kashmere Gate, Rajiv Chowk, and Dwarka Mor.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          modelUsed: 'travety-static-engine',
+          sources: [
+            { title: 'DMRC Official Route & Interchange Guide', uri: 'https://www.delhimetrorail.com' },
+          ],
+        };
+        onUpdateMessages([...updatedThread, fallbackMsg]);
+        return;
+      }
 
       const data = await response.json();
       if (!response.ok) {
