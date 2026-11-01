@@ -35,6 +35,7 @@ function createSafeAuth() {
 
 export const auth = createSafeAuth();
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 // Clear any stale IndexedDB auth tokens from previous sessions that could block Firestore
 try {
