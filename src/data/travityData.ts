@@ -1,4 +1,4 @@
-export type MemberId = 'saumay' | 'devika' | 'vansh' | 'rimisha' | 'pragya';
+export type MemberId = 'saumay' | 'devika' | 'vansh' | 'rimsha' | 'pragya';
 
 export type AccessoryKind = 'cap' | 'bow' | 'headphones' | 'glasses' | 'beanie' | 'flower';
 
@@ -53,8 +53,8 @@ export const MEMBERS: Member[] = [
     budget: 500,
   },
   {
-    id: 'rimisha',
-    name: 'Rimisha',
+    id: 'rimsha',
+    name: 'Rimsha',
     color: '#34D399',
     accessory: 'glasses',
     stationId: 'civil-lines',
@@ -354,7 +354,7 @@ export const DESTINATIONS: Destination[] = [
     returnFit: 94,
     budgetFit: 96,
     reasons: [
-      'Home campus for Devika & Rimisha with direct Yellow Line connectivity',
+      'Home campus for Devika & Rimsha with direct Yellow Line connectivity',
       'Triple-line metro hub with Pink Saheli desk and high police presence',
     ],
     imageStatus: 'placeholder',
@@ -769,7 +769,7 @@ export const DEMO_OUTINGS: CalendarOuting[] = [
     time: '5:30 PM',
     dest: 'nsut-dwarka-hub',
     status: 'active',
-    memberIds: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+    memberIds: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
   },
   {
     id: 'out-up-1',
@@ -787,7 +787,7 @@ export const DEMO_OUTINGS: CalendarOuting[] = [
     time: '3:00 PM',
     dest: 'sunder-nursery',
     status: 'past',
-    memberIds: ['saumay', 'devika', 'rimisha', 'pragya'],
+    memberIds: ['saumay', 'devika', 'rimsha', 'pragya'],
   },
   {
     id: 'out-past-2',
@@ -796,7 +796,7 @@ export const DEMO_OUTINGS: CalendarOuting[] = [
     time: '4:30 PM',
     dest: 'igdtuw-kashmere-gate',
     status: 'past',
-    memberIds: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+    memberIds: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
   },
 ];
 
@@ -848,7 +848,7 @@ export const RECEIVED_INVITES: ReceivedInvite[] = [
 export const SENT_INVITES: { id: string; to: MemberId; outingId: string; status: SentStatus }[] = [
   { id: 'inv-s1', to: 'devika', outingId: 'out-active-1', status: 'accepted' },
   { id: 'inv-s2', to: 'vansh', outingId: 'out-active-1', status: 'accepted' },
-  { id: 'inv-s3', to: 'rimisha', outingId: 'out-active-1', status: 'accepted' },
+  { id: 'inv-s3', to: 'rimsha', outingId: 'out-active-1', status: 'accepted' },
   { id: 'inv-s4', to: 'pragya', outingId: 'out-active-1', status: 'accepted' },
 ];
 
@@ -866,21 +866,21 @@ export const INITIAL_EXPENSES: ExpenseItem[] = [
     label: 'NSUT Main Gate Cold Coffee & Snacks',
     paidBy: 'saumay',
     amount: 650,
-    participants: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+    participants: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
   },
   {
     id: 'exp-2',
     label: 'Shared E-Rickshaw from Dwarka Mor Gate 1',
     paidBy: 'vansh',
     amount: 150,
-    participants: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+    participants: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
   },
   {
     id: 'exp-3',
     label: 'Kashmere Gate Momos & Chai',
     paidBy: 'devika',
     amount: 480,
-    participants: ['saumay', 'devika', 'rimisha', 'pragya'],
+    participants: ['saumay', 'devika', 'rimsha', 'pragya'],
   },
 ];
 
@@ -909,7 +909,7 @@ export const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   {
     id: 'notif-2',
     kind: 'join',
-    title: 'Rimisha & Pragya locked their starting metro stations',
+    title: 'Rimsha & Pragya locked their starting metro stations',
     body: 'Civil Lines (Yellow Line) and Janakpuri West (Blue Line) synced to Lobby TRV-8492.',
     time: '35m ago',
     unread: true,
@@ -919,7 +919,7 @@ export const INITIAL_NOTIFICATIONS: NotificationItem[] = [
     id: 'notif-3',
     kind: 'safety',
     title: 'Curfew Return Reminder Active',
-    body: 'Rimisha (8:15 PM curfew) and Devika (8:30 PM curfew) should board by 7:45 PM.',
+    body: 'Rimsha (8:15 PM curfew) and Devika (8:30 PM curfew) should board by 7:45 PM.',
     time: '1h ago',
     unread: false,
     targetTab: 'safety',

@@ -124,7 +124,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({
 
   const handleSendAllSms = () => {
     setSmsDispatchedTo(
-      `Automated Curfew SMS dispatched to all ${members.length} team members (Devika, Vansh, Saumay, Rimisha, Pragya).`
+      `Automated Curfew SMS dispatched to all ${members.length} team members (Devika, Vansh, Saumay, Rimsha, Pragya).`
     );
   };
 
@@ -567,7 +567,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({
         </form>
       </section>
 
-      {/* Squad Roster & Automated Curfew Texts: Devika, Vansh, Saumay, Rimisha, Pragya */}
+      {/* Squad Roster & Automated Curfew Texts: Devika, Vansh, Saumay, Rimsha, Pragya */}
       <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 flex flex-col gap-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
@@ -575,7 +575,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({
               Squad Roster &amp; Curfew Departure Alerts
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Devika, Vansh, Saumay, Rimisha &amp; Pragya
+              Devika, Vansh, Saumay, Rimsha &amp; Pragya
             </p>
           </div>
 

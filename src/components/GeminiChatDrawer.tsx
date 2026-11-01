@@ -40,7 +40,7 @@ const QUICK_PROMPTS = [
   {
     label: 'Optimize 5-Member Curfew Plan',
     prompt:
-      'Analyze the curfew and metro route for Devika, Vansh, Saumay, Rimisha, and Pragya and suggest the safest synchronized departure plan.',
+      'Analyze the curfew and metro route for Devika, Vansh, Saumay, Rimsha, and Pragya and suggest the safest synchronized departure plan.',
     tier: 'general' as ModelTierOption,
     search: false,
   },
@@ -140,7 +140,7 @@ export const GeminiChatDrawer: React.FC<GeminiChatDrawerProps> = ({
         const fallbackMsg: ChatMessageItem = {
           id: `msg-${Date.now()}-m`,
           role: 'model',
-          text: `**Travety Offline Commute Advisory (${lobby.centralHub})**\n\n• **Recommended DMRC Route**: Board the **Blue Line** at **Dwarka Mor (NSUT)** or **Yellow Line** at **Kashmere Gate (IGDTUW)** and interchange via **Rajiv Chowk**.\n• **Curfew Synchronization**: Based on the earliest squad curfew (**Rimisha · 8:15 PM at Civil Lines**), initiate group wrap-up by **7:35 PM**.\n• **Safety Check**: Board near the Women's Coach (1st coach in moving direction) and use verified **Pink Saheli** helpdesks at Kashmere Gate, Rajiv Chowk, and Dwarka Mor.`,
+          text: `**Travety Offline Commute Advisory (${lobby.centralHub})**\n\n• **Recommended DMRC Route**: Board the **Blue Line** at **Dwarka Mor (NSUT)** or **Yellow Line** at **Kashmere Gate (IGDTUW)** and interchange via **Rajiv Chowk**.\n• **Curfew Synchronization**: Based on the earliest squad curfew (**Rimsha · 8:15 PM at Civil Lines**), initiate group wrap-up by **7:35 PM**.\n• **Safety Check**: Board near the Women's Coach (1st coach in moving direction) and use verified **Pink Saheli** helpdesks at Kashmere Gate, Rajiv Chowk, and Dwarka Mor.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           modelUsed: 'travety-static-engine',
           sources: [
@@ -184,7 +184,7 @@ export const GeminiChatDrawer: React.FC<GeminiChatDrawerProps> = ({
       {
         id: 'welcome-msg',
         role: 'model',
-        text: `Hi ${userName}! I'm your Travety Campus & Metro Assistant for NSUT and IGDTUW. Ask me about live DMRC Blue/Yellow Line routes, Google Search grounded safety updates, or curfew departure plans for Devika, Vansh, Saumay, Rimisha, and Pragya.`,
+        text: `Hi ${userName}! I'm your Travety Campus & Metro Assistant for NSUT and IGDTUW. Ask me about live DMRC Blue/Yellow Line routes, Google Search grounded safety updates, or curfew departure plans for Devika, Vansh, Saumay, Rimsha, and Pragya.`,
         timestamp: 'Just now',
         modelUsed: 'gemini-3.8-flash',
       },

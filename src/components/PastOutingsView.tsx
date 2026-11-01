@@ -19,7 +19,7 @@ export const PastOutingsView: React.FC<PastOutingsViewProps> = ({
           Past Squad Outings
         </h1>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-          NSUT &amp; IGDTUW hangout archive for Devika, Vansh, Saumay, Rimisha, and Pragya
+          NSUT &amp; IGDTUW hangout archive for Devika, Vansh, Saumay, Rimsha, and Pragya
         </p>
       </div>
 

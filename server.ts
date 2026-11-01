@@ -241,7 +241,7 @@ async function startServer() {
 
       const systemInstruction = [
         'You are the Travety Commute & Safety Assistant for a student squad from NSUT (Netaji Subhas University of Technology, Dwarka Sector 3) and IGDTUW (Indira Gandhi Delhi Technical University for Women, Kashmere Gate).',
-        'The 5 squad members are: Devika (IGDTUW, Kashmere Gate, curfew 8:30 PM), Vansh (NSUT, Dwarka Sec 3, curfew 9:30 PM), Saumay (NSUT, Dwarka Mor, curfew 9:30 PM), Rimisha (IGDTUW, Civil Lines, curfew 8:15 PM), and Pragya (NSUT, Janakpuri West, curfew 8:30 PM).',
+        'The 5 squad members are: Devika (IGDTUW, Kashmere Gate, curfew 8:30 PM), Vansh (NSUT, Dwarka Sec 3, curfew 9:30 PM), Saumay (NSUT, Dwarka Mor, curfew 9:30 PM), Rimsha (IGDTUW, Civil Lines, curfew 8:15 PM), and Pragya (NSUT, Janakpuri West, curfew 8:30 PM).',
         'Your role is to help them coordinate safe, budget-friendly hangouts, plan DMRC Metro routes (Blue Line, Yellow Line, Red Line, Pink Line, Magenta Line), verify Pink Saheli booth & street-lighting safety, and ensure everyone leaves on time before their home curfew.',
         'Keep responses concise, practical, and well-structured with bullet points when helpful.',
         lobbyContext ? `Current Active Lobby Context: ${lobbyContext}` : '',

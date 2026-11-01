@@ -76,7 +76,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           Coordinate campus hangouts &amp; get home before curfew.
         </h1>
         <p className="text-sm text-blue-50 max-w-2xl leading-relaxed">
-          Built for Devika, Vansh, Saumay, Rimisha, and Pragya across NSUT (Dwarka) and IGDTUW
+          Built for Devika, Vansh, Saumay, Rimsha, and Pragya across NSUT (Dwarka) and IGDTUW
           (Kashmere Gate).
         </p>
       </section>
@@ -114,7 +114,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               )}
             </div>
 
-            {/* Quick Select Squad Buttons: Devika, Vansh, Saumay, Rimisha, Pragya */}
+            {/* Quick Select Squad Buttons: Devika, Vansh, Saumay, Rimsha, Pragya */}
             <div>
               <span className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">
                 Quick-select team member:

@@ -135,7 +135,7 @@ export const NCR_HUB_RECOMMENDATIONS: HubRecommendation[] = [
   },
 ];
 
-// Squad Members: Devika, Vansh, Saumay, Rimisha, Pragya
+// Squad Members: Devika, Vansh, Saumay, Rimsha, Pragya
 export const DEFAULT_SQUAD_MEMBERS: SquadMember[] = [
   {
     id: 'member-devika',
@@ -146,7 +146,7 @@ export const DEFAULT_SQUAD_MEMBERS: SquadMember[] = [
     gender: 'female',
     location: 'IGDTUW, Kashmere Gate',
     curfew: '20:30',
-    accompanyingDetails: 'Yellow Line with Rimisha',
+    accompanyingDetails: 'Yellow Line with Rimsha',
     budget: 400,
     phone: '+91 98110 44210',
     leaveByTime: '7:55 PM',
@@ -183,10 +183,10 @@ export const DEFAULT_SQUAD_MEMBERS: SquadMember[] = [
     transitMins: 28,
   },
   {
-    id: 'member-rimisha',
+    id: 'member-rimsha',
     lobbyCode: 'TRV-8492',
-    userId: 'demo-rimisha',
-    name: 'Rimisha',
+    userId: 'demo-rimsha',
+    name: 'Rimsha',
     initials: 'RM',
     gender: 'female',
     location: 'IGDTUW, Civil Lines',
@@ -244,7 +244,7 @@ export const DEFAULT_PAST_OUTINGS: PastOuting[] = [
     date: 'Oct 19, 2026',
     mode: 'safe',
     avgSpend: 340,
-    participants: ['Devika', 'Vansh', 'Saumay', 'Rimisha', 'Pragya'],
+    participants: ['Devika', 'Vansh', 'Saumay', 'Rimsha', 'Pragya'],
     safetyScore: 97,
     summary:
       'All 5 team members departed via Dwarka Mor Blue Line corridor and reached home 15 mins before curfew.',
@@ -257,7 +257,7 @@ export const DEFAULT_PAST_OUTINGS: PastOuting[] = [
     date: 'Oct 11, 2026',
     mode: 'fun',
     avgSpend: 310,
-    participants: ['Devika', 'Vansh', 'Saumay', 'Rimisha', 'Pragya'],
+    participants: ['Devika', 'Vansh', 'Saumay', 'Rimsha', 'Pragya'],
     safetyScore: 98,
     summary:
       'Coordinated return via Kashmere Gate Gate 6 interchange. Automated curfew texts sent 35 mins prior.',
@@ -291,8 +291,8 @@ export const DEFAULT_AREA_REVIEWS: AreaReviewItem[] = [
   },
   {
     id: 'rev-3',
-    userId: 'demo-rimisha',
-    authorName: 'Rimisha',
+    userId: 'demo-rimsha',
+    authorName: 'Rimsha',
     areaName: 'Subway Stretch behind Old Kashmere Gate ISBT',
     safetyRating: 2,
     lightingStatus: 'Dim / Dark Stretches',

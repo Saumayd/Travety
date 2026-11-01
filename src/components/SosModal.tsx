@@ -79,7 +79,7 @@ export const SosModal: React.FC<SosModalProps> = ({
             </div>
             <p className="text-xs text-rose-950 dark:text-rose-200 font-medium">
               Broadcasting live alert near <strong>{currentLocationName}</strong> to Devika, Vansh,
-              Saumay, Rimisha, and Pragya...
+              Saumay, Rimsha, and Pragya...
             </p>
             <div className="w-full grid grid-cols-2 gap-2">
               <button

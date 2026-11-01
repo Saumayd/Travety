@@ -1073,7 +1073,7 @@ export function ExpensesPage({
       label: label.trim(),
       amount: num,
       paidBy,
-      participants: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+      participants: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
     });
     setLabel('');
     setAmount('');

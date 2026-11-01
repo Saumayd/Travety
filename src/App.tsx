@@ -71,6 +71,7 @@ import {
   type NotificationItem,
 } from './data/travityData';
 import { LanguageProvider, ThemeProvider, useT, type TKey } from './lib/ui-prefs';
+import { AuthView, AuthSession } from './components/AuthView';
 import { DemoBadge, FriendAvatar, TravisImg } from './components/travity/TravityBits';
 import {
   DashboardPage,
@@ -119,7 +120,7 @@ const DEFAULT_CHAT_MESSAGES: ChatMessageItem[] = [
   {
     id: 'msg-welcome',
     role: 'model',
-    text: 'Hi! I am Travis, your Travety Gemini Assistant for the NSUT & IGDTUW squad (Devika, Vansh, Saumay, Rimisha, and Pragya).\n\n• Ask me to plan curfew-safe DMRC Blue & Yellow Line routes between NSUT (Dwarka Mor) and IGDTUW (Kashmere Gate)\n• Toggle Google Search Grounding ON for live Delhi weather, DMRC metro updates, and student cafes with verified web citations\n• Switch between Fast (3.1 Flash-Lite) and General (3.8 Flash) reasoning modes.',
+    text: 'Hi! I am Travis, your Travety Gemini Assistant for the NSUT & IGDTUW squad (Devika, Vansh, Saumay, Rimsha, and Pragya).\n\n• Ask me to plan curfew-safe DMRC Blue & Yellow Line routes between NSUT (Dwarka Mor) and IGDTUW (Kashmere Gate)\n• Toggle Google Search Grounding ON for live Delhi weather, DMRC metro updates, and student cafes with verified web citations\n• Switch between Fast (3.1 Flash-Lite) and General (3.8 Flash) reasoning modes.',
     modelUsed: 'gemini-3.8-flash',
     timestamp: 'Ready',
   },
@@ -140,7 +141,7 @@ const DEFAULT_GROUP_NOTES: GroupChatNote[] = [
   },
   {
     id: 'gn-3',
-    memberId: 'rimisha',
+    memberId: 'rimsha',
     text: 'My curfew is 8:15 PM at Civil Lines, so let’s wrap up by 7:40 PM.',
     time: '16:48',
   },
@@ -207,6 +208,14 @@ function TravityShell() {
   const [selectedDestSlug, setSelectedDestSlug] = useState<string>('nsut-dwarka-hub');
 
   const [user, setUser] = useState<User | null>(null);
+  const [authSession, setAuthSession] = useState<AuthSession | null>(() => {
+    try {
+      const saved = localStorage.getItem('travety_auth_session');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [authReady, setAuthReady] = useState<boolean>(false);
   const [isSosOpen, setIsSosOpen] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
@@ -255,7 +264,7 @@ function TravityShell() {
       saumay: 'dwarka-mor',
       devika: 'kashmere-gate',
       vansh: 'dwarka-sec-21',
-      rimisha: 'civil-lines',
+      rimsha: 'civil-lines',
       pragya: 'janakpuri-west',
     })
   );
@@ -268,7 +277,7 @@ function TravityShell() {
     'saumay',
     'devika',
     'vansh',
-    'rimisha',
+    'rimsha',
     'pragya',
   ]);
   const [chosenDestinationSlug, setChosenDestinationSlug] = useState<string | null>(
@@ -302,6 +311,35 @@ function TravityShell() {
       setCurrentPage(prev);
     } else {
       setCurrentPage('dashboard');
+    }
+  };
+
+  const handleLoginSuccess = (session: AuthSession) => {
+    setAuthSession(session);
+    try {
+      localStorage.setItem('travety_auth_session', JSON.stringify(session));
+    } catch {
+      // ignore
+    }
+    if (session.memberId) {
+      handleSelectSquadMember(session.memberId);
+    } else if (session.displayName) {
+      setUserName(session.displayName);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await logOutUser();
+    } catch {
+      // ignore
+    }
+    setUser(null);
+    setAuthSession(null);
+    try {
+      localStorage.removeItem('travety_auth_session');
+    } catch {
+      // ignore
     }
   };
 
@@ -358,7 +396,7 @@ function TravityShell() {
   const callSqlApi = async (path: string, method: 'GET' | 'POST', body?: unknown) => {
     try {
       const token = auth.currentUser ? await auth.currentUser.getIdToken() : 'demo-saumay';
-      const devUid = auth.currentUser?.uid || user?.uid || 'demo-saumay';
+      const devUid = auth.currentUser?.uid || user?.uid || authSession?.uid || 'demo-rimsha';
       const res = await fetch(getApiUrl(path), {
         method,
         headers: {
@@ -832,6 +870,29 @@ function TravityShell() {
     status: chosenDestinationSlug ? 'planned' : 'lobby',
   };
 
+  if (!authSession && !user) {
+    return (
+      <ThemeProvider>
+        <LanguageProvider>
+          <AuthView
+            onLoginSuccess={handleLoginSuccess}
+            onGoogleSignIn={async () => {
+              const res = await signInWithGoogle();
+              if (res?.user) {
+                const session: AuthSession = {
+                  uid: res.user.uid,
+                  displayName: res.user.displayName || 'Travety Student',
+                  email: res.user.email || '',
+                };
+                handleLoginSuccess(session);
+              }
+            }}
+          />
+        </LanguageProvider>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground lg:grid lg:grid-cols-[264px_1fr]">
       {/* Google Maps Quota Banner if needed */}
@@ -908,10 +969,10 @@ function TravityShell() {
             </div>
           </div>
 
-          {user ? (
+          {(user || authSession) ? (
             <button
               type="button"
-              onClick={logOutUser}
+              onClick={handleSignOut}
               className="text-xs font-medium text-muted-foreground underline-offset-2 hover:underline"
             >
               Sign out
@@ -1217,7 +1278,7 @@ function TravityShell() {
                   kind: 'Squad Re-run',
                   date: '2026-11-01',
                   budget: 450,
-                  memberIds: ['saumay', 'devika', 'vansh', 'rimisha', 'pragya'],
+                  memberIds: ['saumay', 'devika', 'vansh', 'rimsha', 'pragya'],
                 });
               }}
               onRateOutingArea={(areaName) => {
@@ -1259,7 +1320,7 @@ function TravityShell() {
             <ProfilePage
               activeMemberId={activeMemberId}
               onSelectMember={handleSelectSquadMember}
-              userEmail={user?.email || null}
+              userEmail={user?.email || authSession?.email || null}
               onGoogleLogin={async () => {
                 try {
                   await signInWithGoogle();
@@ -1267,7 +1328,7 @@ function TravityShell() {
                   // ignore
                 }
               }}
-              onLogout={logOutUser}
+              onLogout={handleSignOut}
             />
           )}
 

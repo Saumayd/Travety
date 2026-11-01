@@ -174,7 +174,7 @@ export function DashboardPage({
           {t('home.greeting', { name: activeMember.name })}
         </h1>
 
-        {/* Quick Squad Identity Selector (Saumay, Devika, Vansh, Rimisha, Pragya) */}
+        {/* Quick Squad Identity Selector (Saumay, Devika, Vansh, Rimsha, Pragya) */}
         <div className="flex flex-wrap items-center gap-1.5">
           {MEMBERS.map((m) => {
             const selected = m.id === activeMemberId;
@@ -365,7 +365,7 @@ export function PlanOutingPage({
     'saumay',
     'devika',
     'vansh',
-    'rimisha',
+    'rimsha',
     'pragya',
   ]);
   const [budget, setBudget] = useState(450);
